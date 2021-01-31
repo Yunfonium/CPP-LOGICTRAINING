@@ -59,13 +59,73 @@ void printList(Node *node){
     }
 }
 
+void deleteNode(Node **head_ref,int key){
+    
+    Node *temp = *head_ref;
+    Node *prev = NULL;
+    
+    if(temp != NULL && temp->data == key){
+        *head_ref = temp->next;
+        delete temp;
+        return;
+    }
+    
+    while(temp != NULL && temp->data != key){
+        prev = temp;
+        temp = temp->next;
+    }
+    if(temp == NULL){
+        return;
+    }
+    
+    prev->next = temp ->next;
+    delete temp;
+}
+
+void deleteNodePos(Node **head_ref, int position){
+    if(*head_ref == NULL){
+        return;
+    }
+    Node *temp = *head_ref;
+    if(position == 0){
+        *head_ref = temp->next;
+        delete temp;
+        return;
+    }
+    for(int n=0;temp!=NULL && n<position-1;n++ )
+        temp = temp->next;
+    if(temp == NULL || temp->next == NULL)
+        return;
+    Node *next = temp->next->next;
+    delete temp->next;
+    temp->next = next;
+    return;
+}
+
 int main()
 {
 
     Node *ptr = NULL;
+    Node *ndptr = NULL;
+    push(&ndptr,5);
+    append(&ndptr,11);
     push(&ptr,a);
     append(&ptr,b);
+    while( ndptr != NULL){
+        insertAfter(ptr->next,ndptr->data);
+        ndptr = ndptr->next;
+    }
+
     printList(ptr);
+    cout << endl;
+    deleteNode(&ptr,11);
+    printList(ptr);
+    cout << endl;
+    deleteNodePos(&ptr,1);
+    printList(ptr);
+
+
+    
 
     return 0;
     
