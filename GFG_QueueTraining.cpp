@@ -43,7 +43,7 @@ int isEmpty(Queue *queue){
 }
 
 void enqueue(Queue *queue, int item){
-    if(isFull(queue))return;
+    if(isFull(queue))return INT_MIN;
     
     queue->rear = (queue->rear + 1)% queue->capacity;
     queue->array[queue->rear] = item;
@@ -79,3 +79,4 @@ int main()
     cout << rear(ptr) <<endl;
     return 0;
 }
+
